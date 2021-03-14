@@ -19,10 +19,11 @@ SECTION_STOPPER = ("GOAHEAD END", "REPEAT STOP")
 
 """
 
-__all__ = [ "Execute_ConfGen",
+__all__ = [ 
+	# "Execute_ConfGen",
 	"ConfGen", "Section", "Replicate", "fnr"
 	]
 
-__version__ = "0.0.1"
-from .execute_confGen import Execute_ConfGen
-from .confGen import ConfGen, Section, Replicate, fnr
+__version__ = "0.0.2"
+# from .execute_confGen import Execute_ConfGen
+from .confGen import ConfGen
