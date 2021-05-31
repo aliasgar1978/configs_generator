@@ -549,38 +549,4 @@ class Replicate:
 if __name__ == '__main__':
 	pass
 # ---------------------------------------------------------------------------- #
-	# # -------- provide inputs
-	# db = "data.xlsx"
-	# template = "template.txt"
-	# output = "output.txt"
-
-	# # -------- ConfGen 
-	# cfg = ConfGen(
-	# 		template_file=template,	# template
-	# 		output_file=output,		# output filename ( default: output.txt)
-
-	# 		db=db,					# database
-
-	# 		# # depricated way of providing database details
-	# 		# xls_db=db,
-	# 		# xls_db_sheet='tables',
-	# 		# var_db=db,
-	# 		# var_db_sheet='var',
-
-	# 		#
-	# 		# confGen_minimal=True,	# execution of var sheet replacement only.( default: False)
-	# 		#
-	# 		find_column_name="FIND",
-	# 		replace_column_name="REPLACE",
-	# 		#
-	# 		condition_starter="GOAHEAD FOR",
-	# 		condition_stopper="GOAHEAD END",
-	# 		repeat_starter   ="REPEAT EACH",
-	# 		repeat_stopper   ="REPEAT STOP",
-	# 		#
-	# 		nested_section_var_identifier= "PARENT"
-
-	# 	)
-	# cfg.generate()
-# ---------------------------------------------------------------------------- #
 
