@@ -1,4 +1,3 @@
-
 # ------------------------------------------------------------------------------
 # Imports
 # ------------------------------------------------------------------------------
@@ -488,9 +487,13 @@ class Replicate:
 		"""
 		rows = max(self.section_dict['filtered_df'].count())
 		for row in range(rows):
+			# print(row)
 			self.update_config_section(row)
-			if not self.section_dict['repeat']: break
-			if self.confGen_minimal: break
+			if not self.section_dict['repeat']: 
+				break
+			if self.confGen_minimal: 
+				print("MINIMAL CONF GEN SO EXITED")
+				break
 
 	def get_table_line_vars(self, RowData):
 		"""data dictionary for a single row """
