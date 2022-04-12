@@ -1,3 +1,4 @@
+
 # ------------------------------------------------------------------------------
 # Imports
 # ------------------------------------------------------------------------------
@@ -41,12 +42,13 @@ def section_type(line, section_starter):
 	"""checks section type in line and returns tuple with details 
 	if section is conditional/repeatative
 	"""
-	if line[:section_starter['no_repeat_len']] == section_starter['no_repeat']:
+	str_line = line.lstrip()
+	if str_line[:section_starter['no_repeat_len']] == section_starter['no_repeat']:
 		repeat = 0
-		line = line[section_starter['no_repeat_len']:].lstrip()
-	elif line[:section_starter['repeat_len']] == section_starter['repeat']:
+		line = str_line[section_starter['no_repeat_len']:].lstrip()
+	elif str_line[:section_starter['repeat_len']] == section_starter['repeat']:
 		repeat = 1
-		line = line[section_starter['repeat_len']:].lstrip()
+		line = str_line[section_starter['repeat_len']:].lstrip()
 	else:
 		return (line, -1)
 	return (line, repeat)
@@ -72,7 +74,7 @@ class ConfGen():
 		db=None,
 		template_file=None,
 		output_file='output.txt',
-		# below 4* depricated ones, next version to be removed
+		#
 		xls_db=None,
 		xls_db_sheet='tables',
 		var_db=None,
@@ -212,7 +214,7 @@ class ConfGen():
 		print("Template Verified\nconfiguration generation is in progress, please wait...")
 
 		# STEP 1. INITIALIZE OBJECT
-		rd = Read(self.section_starter, self.section_stopper, self.var_db_columns)
+		rd = Read(self.section_starter, self.section_stopper, self.var_db_columns, self.xls_db_sheet)
 		#####################################################
 		if self.db:
 			dataframes = rd.database(self.db)
@@ -248,10 +250,12 @@ class Read():
 		section_starter, 
 		section_stopper,
 		var_db_columns,
+		xls_db_sheet,
 		):
 		self.section_starter = section_starter
 		self.section_stopper = section_stopper
 		self.var_db_columns = var_db_columns
+		self.xls_db_sheet = xls_db_sheet
 		self.section_list = []
 		self.section_dict = {
 			'logic_line': None,
@@ -268,7 +272,7 @@ class Read():
 
 	def dataframes(self, xls_db):
 		"""read Excel sheets and store it in Dictionary """
-		self.tables_df = DB.read_excel(file=xls_db, sheet='tables')
+		self.tables_df = DB.read_excel(file=xls_db, sheet=self.xls_db_sheet)
 		self.var_df = DB.read_excel(file=xls_db, sheet='var')
 		return {'var':self.var_df , 'tables': self.tables_df}
 
@@ -485,6 +489,9 @@ class Replicate:
 		"""Go thru each line of data (data frame), and update configs in that 
 		section
 		"""
+		if self.section_dict['filtered_df'].empty: 
+			return None
+
 		rows = max(self.section_dict['filtered_df'].count())
 		for row in range(rows):
 			# print(row)
