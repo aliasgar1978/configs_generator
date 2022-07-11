@@ -450,7 +450,7 @@ class Replicate:
 		logic_line = logic_line.replace( "|", "| \n\t")
 		return logic_line
 
-	def get_section_dataframe(self, df_condition, logic_line):
+	def get_section_dataframe(self, df_condition):
 		"""returns filtered dataframe for given condition"""
 		try:
 			df = self.dataframes['tables']
