@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="configs_generator",
-    version="0.0.5",
+    version="0.0.6",
     author="ALIASGAR - ALI",
     author_email="aholo2000@gmail.com",
     description="Configuration generation from Excel Facts File",

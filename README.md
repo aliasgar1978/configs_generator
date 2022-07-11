@@ -5,6 +5,8 @@ Mandatory Required packages
 ===========================
 pandas, nettoolkit
 
+For the documentation kindly refer to 
+https://configs_generator.readthedocs.io
 
 # ======== OPTION 1 =========== #
 import configs_generator as cg

@@ -44,7 +44,7 @@ __all__ = [
 	"ConfGen", "Read", "Section", "Replicate"
 	]
 
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 
 from .confGen import ConfGen, Read, Section, Replicate
 
