@@ -427,18 +427,15 @@ class Replicate:
 			logic_line = logic_line.replace("( ", "(")
 		while logic_line.find(" )") > -1:
 			logic_line = logic_line.replace(" )", ")")
-		if logic_line.find("((") > -1:
-			logic_line = logic_line.replace("((", "((df['")
-			i = -1
-			for x in range(10):
-				doubleBR_idx = logic_line.find("((")
-				i = logic_line.find("(", i+1)
-				if i == -1: break
-				if i == doubleBR_idx: continue
-				if i == doubleBR_idx+1: continue
-				logic_line = logic_line[:i] + "(df['" + logic_line[i+1:]
-		else:
-			logic_line = logic_line.replace("(", "(df['")
+		for i, _ in enumerate(range(10,0,-1)):
+			ss = "("*_
+			while logic_line.find(ss) > -1:
+				logic_line = logic_line.replace(ss, f"{i}_BRACKET_TEMPO")
+		logic_line = logic_line.replace("(", "(df['")
+		for i, _ in enumerate(range(10,0,-1)):
+			ss = "("*_
+			logic_line = logic_line.replace(f"{i}_BRACKET_TEMPO", f"{ss}df['")
+		#
 		for _c in COMPARATORS:
 			while logic_line.find(" " + _c) > -1:
 				logic_line = logic_line.replace(" " + _c, _c)
@@ -449,9 +446,11 @@ class Replicate:
 		logic_line = logic_line.replace(' == ""', '.isnull()')
 		logic_line = logic_line.replace('%2!= ""', '%2.notnull()')
 		logic_line = logic_line.replace('%2== ""', '%2.isnull()')
+		logic_line = logic_line.replace( "&", "& \n\t")
+		logic_line = logic_line.replace( "|", "| \n\t")
 		return logic_line
 
-	def get_section_dataframe(self, df_condition):
+	def get_section_dataframe(self, df_condition, logic_line):
 		"""returns filtered dataframe for given condition"""
 		try:
 			df = self.dataframes['tables']
@@ -459,7 +458,7 @@ class Replicate:
 			self.section_dict['condition'] = not self.section_dict['filtered_df'].empty
 			return self.section_dict['filtered_df']
 		except:
-			print(f"Error in Template condition\n{df_condition}")
+			print(f"<< Error in Template condition\n{df_condition} >>")
 			raise Exception()
 
 	def go_thru_section_list(self):
